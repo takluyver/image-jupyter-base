@@ -1,0 +1,14 @@
+[build-system]
+requires = ["flit"]
+build-backend = "flit.buildapi"
+
+[tool.flit.metadata]
+module = "jupyterfg"
+author = "Paweł Biernat"
+author-email = "pawel.biernat@comma-soft.de"
+requires=[
+    "nbconvert",
+    "requests",
+    "jupyter_contrib_nbextensions",
+    "click",
+]

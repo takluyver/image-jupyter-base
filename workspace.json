@@ -1,0 +1,42 @@
+{
+    "data": {
+        "layout-restorer:data": {
+            "main": {
+                "dock": {
+                    "type": "tab-area",
+                    "currentIndex": 1,
+                    "widgets": [
+                        "notebook:analysis/analysis.ipynb"
+                    ]
+                },
+                "mode": "single-document",
+                "current": "notebook:analysis/analysis.ipynb"
+            },
+            "left": {
+                "collapsed": true,
+                "widgets": [
+                    "filebrowser",
+                    "running-sessions",
+                    "command-palette",
+                    "tab-manager"
+                ]
+            },
+            "right": {
+                "collapsed": true,
+                "widgets": []
+            }
+        },
+        "file-browser-filebrowser:cwd": {
+            "path": "analysis"
+        },
+        "notebook:analysis/analysis.ipynb": {
+            "data": {
+                "path": "analysis/analysis.ipynb",
+                "factory": "Notebook"
+            }
+        }
+    },
+    "metadata": {
+        "id": "/lab/workspaces/analysis"
+    }
+}
