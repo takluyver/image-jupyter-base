@@ -3,12 +3,10 @@ version: '3'
 services:
   base:
     build: .
-    image: jupyterfg-base:0.0.1
 
   # runs a server with the save hook
   jupyterfg-server:
     build: .
-    image: jupyterfg-base:0.0.1
     ports:
       - 8886:8888
     command: jupyter lab
@@ -16,7 +14,6 @@ services:
   # executes a notebook
   jupyterfg-execute:
     build: .
-    image: jupyterfg-base:0.0.1
     volumes:
       - ./test:/test:rw
     environment:
