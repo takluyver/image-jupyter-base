@@ -33,13 +33,17 @@ const extension: JupyterFrontEndPlugin<void> = {
         quit.addEventListener('click', function () {
             return showDialog({
                 title: 'Shutdown confirmation',
-                body: 'Please confirm you want to shut down JupyterLab.',
+                body: 'Do you really want to quit the interactive analysis?',
                 buttons: [
+                    Dialog.okButton({label: 'Save and quit'}),
+                    Dialog.warnButton({ label: 'Quit without saving' }),
                     Dialog.cancelButton(),
-                    Dialog.warnButton({ label: 'Shut Down' })
-                ]
-            }).then(result => {
+                ],
+                defaultButton: 0
+            }).then(async result => {
                 if (result.button.accept) {
+                    if (result.button.displayType === "default")
+                        await app.commands.execute('docmanager:save-all');
                     let setting = ServerConnection.makeSettings();
                     let apiURL = URLExt.join(setting.baseUrl, 'api/shutdown');
                     return ServerConnection.makeRequest(
@@ -49,16 +53,14 @@ const extension: JupyterFrontEndPlugin<void> = {
                     )
                         .then(result => {
                             if (result.ok) {
-                                // Close this window if the shutdown request has been successful
                                 let body = document.createElement('div');
-                                body.innerHTML = `<p>You have shut down the Jupyter server. You can now close this tab.</p>
-<p>To use JupyterLab again, you will need to relaunch it.</p>`;
+                                body.innerHTML = `<p>We are shutting down the interactive analysis.</p><br />
+<p>You will be redirected to the results page in a moment.</p>`;
                                 void showDialog({
-                                    title: 'Server stopped',
+                                    title: 'Server is shutting down',
                                     body: new Widget({ node: body }),
                                     buttons: []
                                 });
-                                window.close();
                             } else {
                                 throw new ServerConnection.ResponseError(result);
                             }
