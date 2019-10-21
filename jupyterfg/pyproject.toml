@@ -4,8 +4,8 @@ build-backend = "flit.buildapi"
 
 [tool.flit.metadata]
 module = "jupyterfg"
-author = "Paweł Biernat"
-author-email = "pawel.biernat@comma-soft.de"
+author = "FASTGenomics Team"
+author-email = "contact@fastgenomics.org"
 requires=[
     "nbconvert",
     "requests",
