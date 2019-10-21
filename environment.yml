@@ -2,3 +2,9 @@ channels:
   - conda-forge
 dependencies:
   - flit
+# For jupyterfg, otherwise theese are installed through pip
+  - nbconvert~=5.5.0
+  - requests~=2.22.0
+  - jupyter_contrib_nbextensions~=0.5.1
+  - click~=7.0.0
+
