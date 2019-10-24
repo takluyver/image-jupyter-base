@@ -1,13 +1,13 @@
 FROM jupyter/minimal-notebook:1386e2046833
 
-COPY environment.yml /
-RUN conda env update -n base -f /environment.yml && \
-        conda clean -afy
+COPY requirements.txt /tmp
+RUN conda install --file /tmp/requirements.txt && \
+	conda clean -afy
 
 # install jupyterfg (including the save hook)
 COPY jupyterfg /tmp/jupyterfg
 RUN cd /tmp/jupyterfg && \
-        flit install --symlink
+    flit install --symlink
 
 # append the save hook to the original config file.
 COPY config /tmp/config
