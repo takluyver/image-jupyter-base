@@ -1,8 +1,13 @@
-FROM jupyter/minimal-notebook:307ad2bb5fce
+FROM jupyter/minimal-notebook:1386e2046833
 
 COPY environment.yml /
 RUN conda env update -n base -f /environment.yml && \
         conda clean -afy
+
+# install jupyterfg (including the save hook)
+COPY jupyterfg /tmp/jupyterfg
+RUN cd /tmp/jupyterfg && \
+        flit install --symlink
 
 # append the save hook to the original config file.
 COPY config /tmp/config
@@ -16,10 +21,6 @@ RUN jupyter labextension install jupyterlab-topbar-extension && \
         npm install && \
         npm run build && \
         jupyter labextension link .
-
-COPY jupyterfg /tmp/jupyterfg
-RUN cd /tmp/jupyterfg && \
-        flit install --symlink
 
 WORKDIR /fastgenomics
 
