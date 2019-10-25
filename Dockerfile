@@ -1,7 +1,8 @@
 FROM jupyter/minimal-notebook:1386e2046833
 
 COPY requirements.txt /tmp
-RUN conda install --file /tmp/requirements.txt && \
+RUN conda config --add channels conda-forge && \
+        conda install --file /tmp/requirements.txt && \
 	conda clean -afy
 
 # install jupyterfg (including the save hook)
