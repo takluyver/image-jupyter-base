@@ -2,3 +2,4 @@ click==7.*
 flit==1.*
 jupyter_contrib_nbextensions>=0.5.1, <0.6
 nbconvert>=5.6.0, <6
+jupyterlab>=1.2.1

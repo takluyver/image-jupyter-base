@@ -24,7 +24,13 @@ RUN jupyter labextension install jupyterlab-topbar-extension && \
         jupyter labextension link .
 
 WORKDIR /fastgenomics
+RUN chown -v -R 1000:100 ~/.jupyter
 
 # import the default workspace
-COPY workspace.json /tmp
-RUN jupyter lab workspaces import /tmp/workspace.json
+COPY --chown=1000:100 workspace.json /home/jovyan/.jupyter/lab/workspaces/
+RUN jupyter lab workspaces import /home/jovyan/.jupyter/lab/workspaces/workspace.json
+
+# overwrite default workspace
+RUN sed -i -e 's/workspace = dict(data=dict(), metadata=dict(id=id))/with open("\/home\/jovyan\/.jupyter\/lab\/workspaces\/workspace.json") as file:/' \
+        -e 's/return self.finish(json.dumps(workspace))/    return self.finish(json.dumps(json.load(file)))/' \
+        /opt/conda/lib/python3.7/site-packages/jupyterlab_server/workspaces_handler.py
