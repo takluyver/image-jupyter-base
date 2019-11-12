@@ -27,6 +27,7 @@ const extension: JupyterFrontEndPlugin<void> = {
         router: IRouter,
         topBar: ITopBar,
     ) => {
+        (window as any).labApp = app;
         let quit = document.createElement('a');
         quit.id = "quit";
         quit.innerHTML = "Quit";
