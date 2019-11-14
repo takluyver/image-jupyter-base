@@ -36,7 +36,7 @@ exporter is passed as an argument for increased performance (constructing it is 
 consuming) but any valid HTML exporter can be used.
 
     """
-    body, resources = exporter.from_notebook_node(nb)
+    body, resources = exporter.from_notebook_node(nb, resources={'ipywidgets_base_url': "https://unpkg.com/"})
     with open(html_file, mode="w") as f:
         if code_folding_button:
             f.write(add_hide_code(body))
