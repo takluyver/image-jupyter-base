@@ -23,6 +23,9 @@ RUN jupyter labextension install jupyterlab-topbar-extension && \
         npm run build && \
         jupyter labextension link .
 
+# Copy overrides.json to settings folder to enable save wdget state as default
+RUN cp /tmp/config/overrides.json /opt/conda/share/jupyter/lab/settings/overrides.json
+
 WORKDIR /fastgenomics
 RUN chown -v -R 1000:100 ~/.jupyter
 
