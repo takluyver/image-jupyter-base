@@ -5,7 +5,7 @@ hide_code_script = """
 <script>
   // Initiate with code visible
   codeVisible=true;
-  <!-- toggle code function -->
+  // toggle code function
   var codeToggle = function code_toggle() {
     if (codeVisible){
       $('div.input').hide('500');
