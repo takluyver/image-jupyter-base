@@ -10,15 +10,9 @@ hide_code_script = """
     if (codeVisible){
       $('div.input').hide('500');
       $('div.output_stderr').hide('500');
-      $('div.output_stdout').hide('500');
-      $('div.output_execute_result').hide('500');
-      $('div.output_prompt').hide('500');
     } else {
       $('div.input').show('500');
       $('div.output_stderr').show('500');
-      $('div.output_stdout').show('500');
-      $('div.output_execute_result').show('500');
-      $('div.output_prompt').show('500');
     }
     codeVisible = !codeVisible;
     return codeVisible;
