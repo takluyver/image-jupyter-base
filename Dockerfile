@@ -26,7 +26,12 @@ RUN jupyter labextension install jupyterlab-topbar-extension && \
 # Copy overrides.json to settings folder to enable save widget state as default
 RUN cp /tmp/config/overrides.json /opt/conda/share/jupyter/lab/settings/overrides.json
 
+USER root
+RUN mkdir /fastgenomics
+RUN chown -v -R 1000:100 /fastgenomics
+USER jovyan
 WORKDIR /fastgenomics
+
 RUN chown -v -R 1000:100 ~/.jupyter
 
 # import the default FG workspace
