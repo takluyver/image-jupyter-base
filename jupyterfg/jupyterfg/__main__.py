@@ -1,6 +1,8 @@
+import nbformat
 from pathlib import Path
-from .execute import execute_and_save
+from .convert import to_html
 import click
+from .status import submit_status
 
 
 @click.command()
@@ -15,9 +17,18 @@ import click
 def main(notebook, status_update_url, cell_timeout):
     print(f"Sending updates to {status_update_url}")
     nb_file = Path(notebook)
-    execute_and_save(
-        nb_file, status_update_url=status_update_url, cell_timeout=cell_timeout
-    )
+    html_file = nb_file.with_suffix(".html")
+
+    with open(nb_file) as f:
+        nb = nbformat.read(f, as_version=4)
+
+    state = dict(all=len(nb.cells), progress=0, failed=0, mode="batch")
+
+    to_html(nb, html_file)
+
+    # status raus
+    state["progress"] = 1
+    submit_status(state, status_update_url)
 
 
 main()

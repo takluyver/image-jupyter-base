@@ -2,8 +2,16 @@ FROM jupyter/minimal-notebook:1386e2046833
 
 COPY requirements.txt /tmp
 RUN conda config --add channels conda-forge && \
-        conda install -q --file /tmp/requirements.txt && \
+    conda install -yq --file /tmp/requirements.txt && \
 	conda clean -afy
+
+# install the jupyter extensions (quit button)
+COPY --chown=1000:100 jupyterlab-quit /tmp/jupyterlab-quit
+RUN jupyter labextension install jupyterlab-topbar-extension && \
+        cd /tmp/jupyterlab-quit && \
+        npm install && \
+        npm run build && \
+        jupyter labextension link .
 
 # install jupyterfg (including the save hook)
 COPY jupyterfg /tmp/jupyterfg
@@ -14,14 +22,6 @@ RUN cd /tmp/jupyterfg && \
 COPY config /tmp/config
 RUN (echo; cat /tmp/config/jupyter_notebook_config.py) >> \
         /etc/jupyter/jupyter_notebook_config.py
-
-# install the jupyter extensions (quit button)
-COPY --chown=1000:100 jupyterlab-quit /tmp/jupyterlab-quit
-RUN jupyter labextension install jupyterlab-topbar-extension && \
-        cd /tmp/jupyterlab-quit && \
-        npm install && \
-        npm run build && \
-        jupyter labextension link .
 
 # Copy overrides.json to settings folder to enable save widget state as default
 RUN cp /tmp/config/overrides.json /opt/conda/share/jupyter/lab/settings/overrides.json
