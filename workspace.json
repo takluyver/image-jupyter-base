@@ -1,42 +1,40 @@
 {
-    "data": {
-        "layout-restorer:data": {
-            "main": {
-                "dock": {
-                    "type": "tab-area",
-                    "currentIndex": 1,
-                    "widgets": [
-                        "notebook:analysis/analysis.ipynb"
-                    ]
-                },
-                "mode": "single-document",
-                "current": "notebook:analysis/analysis.ipynb"
-            },
-            "left": {
-                "collapsed": true,
-                "widgets": [
-                    "filebrowser",
-                    "running-sessions",
-                    "command-palette",
-                    "tab-manager"
-                ]
-            },
-            "right": {
-                "collapsed": true,
-                "widgets": []
-            }
+  "data": {
+    "layout-restorer:data": {
+      "main": {
+        "dock": {
+          "type": "tab-area",
+          "currentIndex": 1,
+          "widgets": ["notebook:analysis/analysis.ipynb"]
         },
-        "file-browser-filebrowser:cwd": {
-            "path": "analysis"
-        },
-        "notebook:analysis/analysis.ipynb": {
-            "data": {
-                "path": "analysis/analysis.ipynb",
-                "factory": "Notebook"
-            }
-        }
+        "mode": "multiple-document",
+        "current": "notebook:analysis/analysis.ipynb"
+      },
+      "left": {
+        "collapsed": true,
+        "widgets": [
+          "filebrowser",
+          "running-sessions",
+          "command-palette",
+          "tab-manager"
+        ]
+      },
+      "right": {
+        "collapsed": true,
+        "widgets": []
+      }
     },
-    "metadata": {
-        "id": "/lab/workspaces/analysis"
+    "file-browser-filebrowser:cwd": {
+      "path": "analysis"
+    },
+    "notebook:analysis/analysis.ipynb": {
+      "data": {
+        "path": "analysis/analysis.ipynb",
+        "factory": "Notebook"
+      }
     }
+  },
+  "metadata": {
+    "id": "/lab/workspaces/analysis"
+  }
 }
