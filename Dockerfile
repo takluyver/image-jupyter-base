@@ -1,14 +1,14 @@
-FROM jupyter/minimal-notebook:1386e2046833
+FROM jupyter/minimal-notebook:bfb2be718a58
 
 COPY requirements.txt /tmp
 RUN conda config --add channels conda-forge && \
         conda install -q --file /tmp/requirements.txt && \
-	conda clean -afy
+        conda clean -afy
 
 # install jupyterfg (including the save hook)
 COPY jupyterfg /tmp/jupyterfg
 RUN cd /tmp/jupyterfg && \
-    flit install --symlink
+        flit install --symlink
 
 # append the save hook to the original config file.
 COPY config /tmp/config
