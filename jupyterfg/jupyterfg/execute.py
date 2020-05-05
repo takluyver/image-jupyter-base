@@ -13,6 +13,7 @@ import logging, sys
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.DEBUG, stream=sys.stdout)
 
+
 def execute_and_save(nb_file, status_update_url=None, cell_timeout=-1):
     nb_file = Path(nb_file)
     html_file = nb_file.with_suffix(".html")
@@ -43,7 +44,9 @@ def execute_and_save(nb_file, status_update_url=None, cell_timeout=-1):
                 nb.cells[i] = c
             except CellExecutionError:
                 state["failed"] += 1
-                logger.debug(f'Executing of cell {i} failed. Total failed cells: {state["failed"]}')
+                logger.debug(
+                    f'Executing of cell {i} failed. Total failed cells: {state["failed"]}'
+                )
             to_html(nb, html_file)
             with open(nb_file, "w") as f:
                 nbformat.write(nb, f)
