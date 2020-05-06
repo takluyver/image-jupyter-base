@@ -27,18 +27,16 @@ RUN jupyter labextension install jupyterlab-topbar-extension && \
 RUN cp /tmp/config/overrides.json /opt/conda/share/jupyter/lab/settings/overrides.json
 
 USER root
-RUN mkdir /fastgenomics
-RUN chown -v -R 1000:100 /fastgenomics
+RUN mkdir /fastgenomics && \
+        chown -v -R 1000:100 /fastgenomics && \
+        chown -v -R 1000:100 /home/jovyan/.jupyter
 USER jovyan
-WORKDIR /fastgenomics
 
-RUN chown -v -R 1000:100 ~/.jupyter
-
-# import the default FG workspace
+# import the default FG workspace and overwrite jupyter fallback WS
 COPY --chown=1000:100 workspace.json /home/jovyan/.jupyter/lab/workspaces/
-RUN jupyter lab workspaces import /home/jovyan/.jupyter/lab/workspaces/workspace.json
-
-# overwrite default Jupyter workspace with our FG workspace
-RUN sed -i -e 's/workspace = dict(data=dict(), metadata=dict(id=id))/with open("\/home\/jovyan\/.jupyter\/lab\/workspaces\/workspace.json") as file:/' \
+RUN jupyter lab workspaces import /home/jovyan/.jupyter/lab/workspaces/workspace.json && \
+        sed -i -e 's/workspace = dict(data=dict(), metadata=dict(id=id))/with open("\/home\/jovyan\/.jupyter\/lab\/workspaces\/workspace.json") as file:/' \
         -e 's/return self.finish(json.dumps(workspace))/    return self.finish(json.dumps(json.load(file)))/' \
         /opt/conda/lib/python3.7/site-packages/jupyterlab_server/workspaces_handler.py
+
+WORKDIR /fastgenomics
