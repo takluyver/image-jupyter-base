@@ -1,14 +1,14 @@
-FROM jupyter/minimal-notebook:1386e2046833
+FROM jupyter/minimal-notebook:bfb2be718a58
 
 COPY requirements.txt /tmp
 RUN conda config --add channels conda-forge && \
         conda install -q --file /tmp/requirements.txt && \
-	conda clean -afy
+        conda clean -afy
 
 # install jupyterfg (including the save hook)
 COPY jupyterfg /tmp/jupyterfg
 RUN cd /tmp/jupyterfg && \
-    flit install --symlink
+        flit install --symlink
 
 # append the save hook to the original config file.
 COPY config /tmp/config
@@ -27,18 +27,16 @@ RUN jupyter labextension install jupyterlab-topbar-extension && \
 RUN cp /tmp/config/overrides.json /opt/conda/share/jupyter/lab/settings/overrides.json
 
 USER root
-RUN mkdir /fastgenomics
-RUN chown -v -R 1000:100 /fastgenomics
+RUN mkdir /fastgenomics && \
+        chown -v -R 1000:100 /fastgenomics && \
+        chown -v -R 1000:100 /home/jovyan/.jupyter
 USER jovyan
-WORKDIR /fastgenomics
 
-RUN chown -v -R 1000:100 ~/.jupyter
-
-# import the default FG workspace
+# import the default FG workspace and overwrite jupyter fallback WS
 COPY --chown=1000:100 workspace.json /home/jovyan/.jupyter/lab/workspaces/
-RUN jupyter lab workspaces import /home/jovyan/.jupyter/lab/workspaces/workspace.json
-
-# overwrite default Jupyter workspace with our FG workspace
-RUN sed -i -e 's/workspace = dict(data=dict(), metadata=dict(id=id))/with open("\/home\/jovyan\/.jupyter\/lab\/workspaces\/workspace.json") as file:/' \
+RUN jupyter lab workspaces import /home/jovyan/.jupyter/lab/workspaces/workspace.json && \
+        sed -i -e 's/workspace = dict(data=dict(), metadata=dict(id=id))/with open("\/home\/jovyan\/.jupyter\/lab\/workspaces\/workspace.json") as file:/' \
         -e 's/return self.finish(json.dumps(workspace))/    return self.finish(json.dumps(json.load(file)))/' \
         /opt/conda/lib/python3.7/site-packages/jupyterlab_server/workspaces_handler.py
+
+WORKDIR /fastgenomics
