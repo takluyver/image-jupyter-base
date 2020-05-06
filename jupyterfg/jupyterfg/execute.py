@@ -51,4 +51,5 @@ def execute_and_save(nb_file, status_update_url=None, cell_timeout=-1):
             with open(nb_file, "w") as f:
                 nbformat.write(nb, f)
             state["progress"] = i + 1
+            logger.info(state)
             submit_status(state, status_update_url)
