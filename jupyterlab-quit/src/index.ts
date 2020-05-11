@@ -41,7 +41,6 @@ const extension: JupyterFrontEndPlugin<void> = {
         if (result.button.accept) {
           if (result.button.displayType === "default")
             await app.commands.execute("docmanager:save-all");
-          (app as any).status._dirtyCount = 0;
           let setting = ServerConnection.makeSettings();
           let apiURL = URLExt.join(setting.baseUrl, "api/shutdown");
           return ServerConnection.makeRequest(
