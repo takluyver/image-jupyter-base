@@ -28,6 +28,10 @@ def get_parser():
         help="Timeout of executing a single cell in seconds.",
     )
 
+    args = parser.parse_args()
+
+    return args
+
 
 def main(notebook, cell_timeout):
     nb_file = Path(notebook)
