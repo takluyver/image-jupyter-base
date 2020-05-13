@@ -13,8 +13,6 @@ def post_save_hook(model, os_path, contents_manager):
     if model["type"] != "notebook":
         return  # only do this for notebooks
 
-    _, fname = os.path.split(os_path)
-
     with open(os_path) as f:
         nb = nbformat.read(f, as_version=4)
 
