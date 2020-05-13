@@ -1,5 +1,6 @@
-from nbconvert import HTMLExporter
 import re
+
+from nbconvert import HTMLExporter
 
 hide_code_script = """
 <script>

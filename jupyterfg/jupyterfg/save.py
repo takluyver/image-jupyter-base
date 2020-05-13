@@ -1,7 +1,9 @@
-import nbformat
 import os
-from .convert import to_html
 from pathlib import Path
+
+import nbformat
+
+from .convert import to_html
 
 
 def post_save_hook(model, os_path, contents_manager):

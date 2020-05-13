@@ -1,12 +1,16 @@
 # from jupyter_contrib_nbextensions.nbconvert_support import EmbedImagesPreprocessor
+import logging
+import sys
+from pathlib import Path
+
 import nbformat
 from nbconvert.preprocessors import ExecutePreprocessor
-from pathlib import Path
+
 from .convert import to_html
-import logging, sys
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.DEBUG, stream=sys.stdout)
+
 
 def execute_and_save(nb_file, cell_timeout=-1):
     nb_file = Path(nb_file)
