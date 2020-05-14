@@ -7,16 +7,6 @@ RUN conda config --add channels conda-forge && \
         conda install -yq --file /tmp/requirements.txt && \
         conda clean -afy
 
-# install jupyterfg (including the save hook)
-COPY jupyterfg /tmp/jupyterfg
-RUN cd /tmp/jupyterfg && \
-        flit install --symlink
-
-# append the save hook to the original config file.
-COPY config /tmp/config
-RUN (echo; cat /tmp/config/jupyter_notebook_config.py) >> \
-        /etc/jupyter/jupyter_notebook_config.py
-
 # install the jupyter extensions (quit button)
 COPY --chown=1000:100 jupyterlab-quit /tmp/jupyterlab-quit
 RUN jupyter labextension install jupyterlab-topbar-extension && \
@@ -24,6 +14,22 @@ RUN jupyter labextension install jupyterlab-topbar-extension && \
         npm install && \
         npm run build && \
         jupyter labextension link .
+
+
+# install jupyterfg (including the save hook)
+COPY jupyterfg /tmp/jupyterfg
+RUN cd /tmp/jupyterfg && \
+        flit install --symlink
+
+# install crash extension
+COPY crash_ext /tmp/crash_ext
+RUN cd /tmp/crash_ext && \
+        flit install --symlink
+
+# append the save hook to the original config file.
+COPY config /tmp/config
+RUN (echo; cat /tmp/config/jupyter_notebook_config.py) >> \
+        /etc/jupyter/jupyter_notebook_config.py
 
 # Copy overrides.json to settings folder to enable save widget state as default
 RUN cp /tmp/config/overrides.json /opt/conda/share/jupyter/lab/settings/overrides.json
