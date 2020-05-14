@@ -1,5 +1,7 @@
 FROM jupyter/minimal-notebook:bfb2be718a58
 
+LABEL maintainer="FASTGenomics <contact@fastgenomics.org>"
+
 COPY requirements.txt /tmp
 RUN conda config --add channels conda-forge && \
         conda install -yq --file /tmp/requirements.txt && \
