@@ -1,0 +1,11 @@
+[build-system]
+requires = ["flit"]
+build-backend = "flit.buildapi"
+
+[tool.flit.metadata]
+module = "save_state_ext"
+author = "FASTGenomics Team"
+author-email = "contact@fastgenomics.org"
+requires=[
+    "notebook",
+]
