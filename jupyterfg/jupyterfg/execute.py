@@ -5,6 +5,7 @@ from pathlib import Path
 
 import nbformat
 from nbconvert.preprocessors import ExecutePreprocessor, ClearOutputPreprocessor
+from nbconvert.preprocessors.execute import CellExecutionError
 
 from .convert import to_html
 
@@ -25,10 +26,16 @@ def execute_and_save(nb_file, cell_timeout=-1):
     clear = ClearOutputPreprocessor(log_level="DEBUG")
     nb, _ = clear.preprocess(nb, res)
 
-    logger.info(f"Executing and converting notebook {nb_file} to html.")
+    logger.info(f"Executing notebook {nb_file}.")
     ep = ExecutePreprocessor(timeout=cell_timeout)
-    ep.preprocess(nb, res)
+    try:
+        ep.preprocess(nb, res)
+    except CellExecutionError as err:
+        logger.error(
+            "Execution of a cell failed. Stoping further execution of the Notebook."
+        )
 
+    logger.info(f"Converting notebook {nb_file} to html.")
     with open(nb_file, "w") as f:
         nbformat.write(nb, f)
 
