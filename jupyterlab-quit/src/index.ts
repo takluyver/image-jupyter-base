@@ -41,6 +41,7 @@ const extension: JupyterFrontEndPlugin<void> = {
         if (result.button.accept) {
           if (result.button.displayType === "default")
             await app.commands.execute("docmanager:save-all");
+          (app as any).status._dirtyCount = 0;
           let setting = ServerConnection.makeSettings();
           let apiURL = URLExt.join(setting.baseUrl, "api/shutdown");
           return ServerConnection.makeRequest(
@@ -53,7 +54,7 @@ const extension: JupyterFrontEndPlugin<void> = {
                 let body = document.createElement("div");
                 body.innerHTML = `<p>We are shutting down the interactive analysis.</p><br />
 <p>You will be redirected to the results page in a moment.</p>`;
-                void showDialog({
+                showDialog({
                   title: "Server is shutting down",
                   body: new Widget({ node: body }),
                   buttons: [],
