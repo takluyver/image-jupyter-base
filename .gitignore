@@ -1,0 +1,4 @@
+jupyterlab-expose/lib/
+**/node_modules/
+**/.ipynb_checkpoints
+**/tsconfig.tsbuildinfo

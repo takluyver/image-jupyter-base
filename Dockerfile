@@ -7,10 +7,9 @@ RUN conda config --add channels conda-forge && \
         conda install -yq --file /tmp/requirements.txt && \
         conda clean -afy
 
-# install the jupyter extensions (quit button)
-COPY --chown=1000:100 jupyterlab-quit /tmp/jupyterlab-quit
-RUN jupyter labextension install jupyterlab-topbar-extension && \
-        cd /tmp/jupyterlab-quit && \
+# install the jupyter expose extensions
+COPY --chown=1000:100 jupyterlab-expose /tmp/jupyterlab-expose
+RUN cd /tmp/jupyterlab-expose && \
         npm install && \
         npm run build && \
         jupyter labextension link .

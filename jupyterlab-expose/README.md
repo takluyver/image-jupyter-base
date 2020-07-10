@@ -1,6 +1,6 @@
-# jupyterlab-quit
+# jupyterlab-expose
 
-Quit Button for JupyterLab
+expose jupyterlab app to embedding page
 
 
 ## Prerequisites

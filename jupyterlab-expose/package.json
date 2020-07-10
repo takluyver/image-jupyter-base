@@ -1,28 +1,20 @@
 {
-    "name": "jupyterlab-quit",
-    "version": "0.5.0",
-    "description": "Shutdown Button for JupyterLab",
+    "name": "jupyterlab-expose",
+    "version": "1.0.0",
+    "description": "Expose JupyterLab for embedding page",
     "keywords": [
         "jupyter",
         "jupyterlab",
         "jupyterlab-extension"
     ],
-    "homepage": "https://github.com/jtpio/jupyterlab-topbar",
-    "bugs": {
-        "url": "https://github.com/jtpio/jupyterlab-topbar/issues"
-    },
     "license": "BSD-3-Clause",
-    "author": "Jeremy Tuloup",
+    "author": "team@fastgenomics.org",
     "files": [
         "lib/**/*.{d.ts,eot,gif,html,jpg,js,js.map,json,png,svg,woff2,ttf}",
         "style/**/*.{css,eot,gif,html,jpg,json,png,svg,woff2,ttf}"
     ],
     "main": "lib/index.js",
     "types": "lib/index.d.ts",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/jtpio/jupyterlab-topbar.git"
-    },
     "scripts": {
         "build": "tsc",
         "clean": "rimraf lib && rimraf tsconfig.tsbuildinfo",
@@ -30,9 +22,7 @@
         "watch": "tsc -w"
     },
     "dependencies": {
-        "@jupyterlab/application": "^2.0.0",
-        "@lumino/widgets": "^1.11.1",
-        "jupyterlab-topbar": "^0.5.0"
+        "@jupyterlab/application": "^2.0.0"
     },
     "devDependencies": {
         "rimraf": "^3.0.2",
