@@ -2,7 +2,7 @@ FROM jupyter/minimal-notebook:bfb2be718a58
 
 LABEL maintainer="FASTGenomics <contact@fastgenomics.org>"
 
-COPY requirements.txt /tmp
+COPY --chown=1000:100 requirements.txt /tmp
 RUN conda config --add channels conda-forge && \
         conda install -yq --file /tmp/requirements.txt && \
         conda clean -afy
@@ -12,26 +12,32 @@ COPY --chown=1000:100 jupyterlab-expose /tmp/jupyterlab-expose
 RUN cd /tmp/jupyterlab-expose && \
         npm install && \
         npm run build && \
-        jupyter labextension link .
+        jupyter labextension link --clean . && \
+        jupyter lab clean && \
+        jlpm cache clean && \
+        npm cache clean --force && \
+        rm -rf /tmp/*
 
 
 # install jupyterfg (including the save hook)
-COPY jupyterfg /tmp/jupyterfg
+COPY --chown=1000:100 jupyterfg /tmp/jupyterfg
 RUN cd /tmp/jupyterfg && \
-        flit install --symlink
+        flit install --symlink && \
+        rm -rf /tmp/*
 
 # install crash extension
-COPY crash_ext /tmp/crash_ext
+COPY --chown=1000:100 crash_ext /tmp/crash_ext
 RUN cd /tmp/crash_ext && \
-        flit install --symlink
+        flit install --symlink && \
+        rm -rf /tmp/*
 
 # append the save hook to the original config file.
-COPY config /tmp/config
+# AND opy overrides.json to settings folder to enable save widget state as default
+COPY --chown=1000:100 config /tmp/config
 RUN (echo; cat /tmp/config/jupyter_notebook_config.py) >> \
-        /etc/jupyter/jupyter_notebook_config.py
-
-# Copy overrides.json to settings folder to enable save widget state as default
-RUN cp /tmp/config/overrides.json /opt/conda/share/jupyter/lab/settings/overrides.json
+        /etc/jupyter/jupyter_notebook_config.py && \
+        cp /tmp/config/overrides.json /opt/conda/share/jupyter/lab/settings/overrides.json && \
+        rm -rf /tmp/*
 
 USER root
 RUN mkdir /fastgenomics && \
