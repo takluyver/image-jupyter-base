@@ -22,13 +22,13 @@ RUN cd /tmp/jupyterlab-expose && \
 # install jupyterfg (including the save hook)
 COPY --chown=1000:100 jupyterfg /tmp/jupyterfg
 RUN cd /tmp/jupyterfg && \
-        flit install --symlink && \
+        flit install && \
         rm -rf /tmp/*
 
 # install crash extension
 COPY --chown=1000:100 crash_ext /tmp/crash_ext
 RUN cd /tmp/crash_ext && \
-        flit install --symlink && \
+        flit install && \
         rm -rf /tmp/*
 
 # append the save hook to the original config file.
