@@ -5,7 +5,8 @@ LABEL maintainer="FASTGenomics <contact@fastgenomics.org>"
 COPY --chown=1000:100 requirements.txt /tmp
 RUN conda config --add channels conda-forge && \
         conda install -yq --file /tmp/requirements.txt && \
-        conda clean -afy
+        conda clean -afy && \
+        rm -rf /tmp/*
 
 # install the jupyter expose extensions
 COPY --chown=1000:100 jupyterlab-expose /tmp/jupyterlab-expose
