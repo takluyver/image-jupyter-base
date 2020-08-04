@@ -1,4 +1,4 @@
-FROM jupyter/minimal-notebook:bfb2be718a58
+FROM jupyter/minimal-notebook:1a66dd36ff82
 
 LABEL maintainer="FASTGenomics <contact@fastgenomics.org>"
 
@@ -51,6 +51,6 @@ COPY --chown=1000:100 workspace.json /home/jovyan/.jupyter/lab/workspaces/
 RUN jupyter lab workspaces import /home/jovyan/.jupyter/lab/workspaces/workspace.json && \
         sed -i -e 's/workspace = dict(data=dict(), metadata=dict(id=id))/with open("\/home\/jovyan\/.jupyter\/lab\/workspaces\/workspace.json") as file:/' \
         -e 's/return self.finish(json.dumps(workspace))/    return self.finish(json.dumps(json.load(file)))/' \
-        /opt/conda/lib/python3.7/site-packages/jupyterlab_server/workspaces_handler.py
+        /opt/conda/lib/python3.8/site-packages/jupyterlab_server/workspaces_handler.py
 
 WORKDIR /fastgenomics
