@@ -6,9 +6,9 @@ import {
 const extension: JupyterFrontEndPlugin<void> = {
   id: "jupyterlab-expose",
   autoStart: true,
-  activate: async (app: JupyterFrontEnd) => {
+  activate: (app: JupyterFrontEnd) => {
     (window as any).labApp = app;
-  }
+  },
 };
 
 export default extension;
