@@ -17,16 +17,16 @@
     "types": "lib/index.d.ts",
     "scripts": {
         "build": "tsc",
-        "clean": "rimraf lib && rimraf tsconfig.tsbuildinfo",
-        "prepare": "npm run clean && npm run build",
+        "clean": "rimraf lib tsconfig.tsbuildinfo",
+        "prepare": "jlpm run clean && jlpm run build",
         "watch": "tsc -w"
     },
     "dependencies": {
         "@jupyterlab/application": "^2.0.0"
     },
     "devDependencies": {
-        "rimraf": "^3.0.2",
-        "typescript": "~3.8.1"
+        "rimraf": "^2.6.1",
+        "typescript": "~3.7.0"
     },
     "jupyterlab": {
         "extension": true

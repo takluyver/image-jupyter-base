@@ -1,7 +1,27 @@
-FROM jupyter/minimal-notebook:1a66dd36ff82
+# set tag forjupyter/minimal-notebook
+ARG IMG_VERISON=9b87b1625445
+
+##############
+# BUILDSTAGE #
+##############
+FROM jupyter/minimal-notebook:${IMG_VERISON} AS build_stage
+
+COPY --chown=1000:100 jupyterlab-expose /tmp/jupyterlab-expose
+
+RUN cd /tmp/jupyterlab-expose && \
+        npm install && \
+        npm run build && \
+        npm pack
+
+
+############
+# RUNSTAGE #
+############
+FROM jupyter/minimal-notebook:${IMG_VERISON}
 
 LABEL maintainer="FASTGenomics <contact@fastgenomics.org>"
 
+# Install conda requirements
 COPY --chown=1000:100 requirements.txt /tmp
 RUN conda config --add channels conda-forge && \
         conda install -yq --file /tmp/requirements.txt && \
@@ -9,15 +29,8 @@ RUN conda config --add channels conda-forge && \
         rm -rf /tmp/*
 
 # install the jupyter expose extensions
-COPY --chown=1000:100 jupyterlab-expose /tmp/jupyterlab-expose
-RUN cd /tmp/jupyterlab-expose && \
-        npm install && \
-        npm run build && \
-        jupyter labextension link --clean . && \
-        jupyter lab clean && \
-        jlpm cache clean && \
-        npm cache clean --force && \
-        rm -rf /tmp/*
+COPY --from=build_stage /tmp/jupyterlab-expose/jupyterlab-expose-1.0.0.tgz /opt/
+RUN jupyter labextension install /opt/jupyterlab-expose-1.0.0.tgz
 
 
 # install jupyterfg (including the save hook)
@@ -33,10 +46,11 @@ RUN cd /tmp/crash_ext && \
         rm -rf /tmp/*
 
 # append the save hook to the original config file.
-# AND opy overrides.json to settings folder to enable save widget state as default
+# AND copy overrides.json to settings folder to enable save widget state as default
 COPY --chown=1000:100 config /tmp/config
 RUN (echo; cat /tmp/config/jupyter_notebook_config.py) >> \
         /etc/jupyter/jupyter_notebook_config.py && \
+        mkdir -pv /opt/conda/share/jupyter/lab/settings && \
         cp /tmp/config/overrides.json /opt/conda/share/jupyter/lab/settings/overrides.json && \
         rm -rf /tmp/*
 

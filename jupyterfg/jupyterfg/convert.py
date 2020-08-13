@@ -26,9 +26,7 @@ def add_hide_code(body):
     return re.sub("<body>", "<body>" + hide_code_script, body)
 
 
-def to_html(
-    nb, html_file, exporter=None, code_folding=True
-):
+def to_html(nb, html_file, exporter=None, code_folding=True):
     """
     A simple function to convert a notebook to HTML.  For consistency in the output
     format it is used by both, the save hook and the execute & convert function.  The
@@ -52,9 +50,9 @@ def to_html(
         },  # required to embed images correctly, otherwise wrong working directory
         "ipywidgets_base_url": "https://unpkg.com/",  # required to embed widgets correctly
     }
-    
+
     if exporter is None:
-      exporter = EmbedHTMLExporter(template_file="full")
+        exporter = EmbedHTMLExporter(template_file="full")
 
     body, resources = exporter.from_notebook_node(nb, resources=res)
     with open(html_file, mode="w") as f:
