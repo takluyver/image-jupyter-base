@@ -68,3 +68,18 @@ python -m jupyterfg --cell_timeout=10 analysis/analysis.ipynb
 To simulate a crash of the jupyter application the endpoint `/6901a7302f214e38847a60f514798a42/crash` can be used, which will cause jupyter lab to exit with code `123`.
 
 > However, this is working on the FASTGenomics system, but there seems to be a problem with the standalone Docker image. Maybe related to some changes in the the base URL or default URL.
+
+## Additional Files and folders
+
+- File `config/jupyter_notebook_config.py`  
+  Gets appended to the Jupyter Lab config and adds the custom save hook and the crash extension
+- File `config/overrides.json`  
+  For configuration of the Jupyter Lab
+- Folder `crash_ext`  
+  see [Crash Extension](#crash-extension)
+- Folder `jupyter_fg`  
+  Python module to generate a html fromt he notebook in interactive and batch mode
+- Folder `jupyterlab-expose`  
+  Jupyter Lab extension to expose Jupyter functionalities
+- File `CustomChanges.md`  
+  Documents custom changes, required to work around some issues
