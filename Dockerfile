@@ -30,7 +30,10 @@ RUN conda config --add channels conda-forge && \
 
 # install the jupyter expose extensions
 COPY --from=build_stage /tmp/jupyterlab-expose/jupyterlab-expose-1.0.0.tgz /opt/
-RUN jupyter labextension install /opt/jupyterlab-expose-1.0.0.tgz
+RUN jupyter labextension install /opt/jupyterlab-expose-1.0.0.tgz && \
+        jupyter lab clean && \
+        jlpm cache clean && \
+        npm cache clean --force
 
 
 # install jupyterfg (including the save hook)
