@@ -4,24 +4,18 @@
       "main": {
         "dock": {
           "type": "tab-area",
-          "currentIndex": 1,
+          "currentIndex": 0,
           "widgets": ["notebook:analysis/analysis.ipynb"]
         },
         "mode": "multiple-document",
         "current": "notebook:analysis/analysis.ipynb"
       },
       "left": {
-        "collapsed": true,
-        "widgets": [
-          "filebrowser",
-          "running-sessions",
-          "command-palette",
-          "tab-manager"
-        ]
+        "collapsed": false,
+        "current": "filebrowser"
       },
       "right": {
-        "collapsed": true,
-        "widgets": []
+        "collapsed": true
       }
     },
     "file-browser-filebrowser:cwd": {
@@ -34,7 +28,5 @@
       }
     }
   },
-  "metadata": {
-    "id": "/lab/workspaces/analysis"
-  }
+  "metadata": { "id": "/lab" }
 }
