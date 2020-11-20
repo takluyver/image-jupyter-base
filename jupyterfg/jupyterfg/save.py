@@ -13,6 +13,9 @@ def post_save_hook(model, os_path, contents_manager):
     if model["type"] != "notebook":
         return  # only do this for notebooks
 
+    if not os_path.suffix == '.ipynb': # e.g. for markdown files with jupytext installed
+        return # We might add a converter for markdown Rmarkdown in the future
+
     with open(os_path) as f:
         nb = nbformat.read(f, as_version=4)
 
