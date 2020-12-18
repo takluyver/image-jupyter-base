@@ -36,13 +36,13 @@ def to_html(nb, html_file, exporter=None, code_folding=True):
     Parameters
     ----------
     nb : Path
-        Path to the ipynb inut file
+        Path to the ipynb input file
     html_file : Path
         Path to the html output file
     exporter : nbconvert exporte, optional
         The exporter to use, by default EmbedHTMLExporter(template_file="full")
     code_folding : bool, optional
-        Whether to include the code folding cuntion or not, by default True
+        Whether to include the code folding function or not, by default True
     """
     res = {
         "metadata": {

@@ -22,9 +22,9 @@ FROM jupyter/minimal-notebook:${IMG_VERISON}
 LABEL maintainer="FASTGenomics <contact@fastgenomics.org>"
 
 # Install conda requirements
-COPY --chown=1000:100 requirements.txt /tmp
+COPY --chown=1000:100 requirements_conda.txt /tmp
 RUN conda config --add channels conda-forge && \
-        conda install -yq --file /tmp/requirements.txt && \
+        conda install -yq --file /tmp/requirements_conda.txt && \
         conda clean -afy && \
         rm -rf /tmp/*
 
