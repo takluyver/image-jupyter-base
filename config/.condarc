@@ -1,0 +1,4 @@
+default_channels:
+  - conda-forge
+  
+custom_channels: {}

@@ -1,5 +1,5 @@
 # set tag forjupyter/minimal-notebook
-ARG IMG_VERISON=9b87b1625445
+ARG IMG_VERISON=703d8b2dcb88
 
 ##############
 # BUILDSTAGE #
@@ -55,6 +55,8 @@ RUN (echo; cat /tmp/config/jupyter_notebook_config.py) >> \
         /etc/jupyter/jupyter_notebook_config.py && \
         mkdir -pv /opt/conda/share/jupyter/lab/settings && \
         cp /tmp/config/overrides.json /opt/conda/share/jupyter/lab/settings/overrides.json && \
+        (echo; cat /tmp/config/.condarc) >> \
+        /opt/conda/.condarc && \
         rm -rf /tmp/*
 
 USER root
