@@ -11,3 +11,6 @@ requires=[
     "nbformat",
     "lxml",
 ]
+
+[tool.flit.entrypoints."nbconvert.exporters"]
+html_embed = "jupyterfg.EmbedHTMLExporter:EmbedHTMLExporter"
