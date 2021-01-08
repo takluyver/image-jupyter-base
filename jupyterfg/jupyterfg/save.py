@@ -7,15 +7,15 @@ import nbformat
 from .convert import to_html
 
 
-def mod_time(files: dict, t_offset: int = -5):
+def mod_time(files: list, t_offset: int = -5):
     """Change access and modification time of a file by `offset`.
 
     To deal with the time buffer issue in Jupyter lab
 
     Parameters
     ----------
-    files : dict
-        dict containing the files to modifiy
+    files : list
+        list containing the files to modifiy
     t_offset : int, optional
         Offset in seconds, by default 5
     """

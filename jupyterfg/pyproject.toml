@@ -8,5 +8,6 @@ author = "FASTGenomics Team"
 author-email = "contact@fastgenomics.org"
 requires=[
     "nbconvert",
-    "jupyter_contrib_nbextensions",
+    "nbformat",
+    "lxml",
 ]

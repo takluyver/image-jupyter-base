@@ -1,6 +1,6 @@
 import re
 
-from jupyter_contrib_nbextensions.nbconvert_support import EmbedHTMLExporter
+from .EmbedHTMLExporter import EmbedHTMLExporter
 
 hide_code_script = """
 <script>
@@ -52,7 +52,7 @@ def to_html(nb, html_file, exporter=None, code_folding=True):
     }
 
     if exporter is None:
-        exporter = EmbedHTMLExporter(template_file="full")
+        exporter = EmbedHTMLExporter(template_file="full.tpl")
 
     body, resources = exporter.from_notebook_node(nb, resources=res)
     with open(html_file, mode="w") as f:
