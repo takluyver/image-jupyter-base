@@ -7,7 +7,7 @@ import nbformat
 from .convert import to_html
 
 
-def mod_time(files: dict, t_offset: int = 5):
+def mod_time(files: dict, t_offset: int = -5):
     """Change access and modification time of a file by `offset`.
 
     To deal with the time buffer issue in Jupyter lab
@@ -43,4 +43,4 @@ def post_save_hook(model, os_path, contents_manager):
     html_file = os_path.with_suffix(".html")
     to_html(nb, html_file)
 
-    mod_time([os_path, html_file])
+    # mod_time([os_path, html_file])
