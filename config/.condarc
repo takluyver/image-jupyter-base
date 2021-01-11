@@ -1,4 +1,3 @@
-default_channels:
-  - conda-forge
+default_channels: {}
   
 custom_channels: {}
