@@ -51,12 +51,10 @@ RUN cd /tmp/crash_ext && \
 # append the save hook to the original config file.
 # AND copy overrides.json to settings folder to enable save widget state as default
 COPY --chown=1000:100 config /tmp/config
-RUN (echo; cat /tmp/config/jupyter_notebook_config.py) >> \
-        /etc/jupyter/jupyter_notebook_config.py && \
+RUN (echo; cat /tmp/config/jupyter_notebook_config.py) >> /etc/jupyter/jupyter_notebook_config.py && \
         mkdir -pv /opt/conda/share/jupyter/lab/settings && \
         cp /tmp/config/overrides.json /opt/conda/share/jupyter/lab/settings/overrides.json && \
-        (echo; cat /tmp/config/.condarc) >> \
-        /opt/conda/.condarc && \
+        (echo; cat /tmp/config/.condarc) >> /opt/conda/.condarc && \
         rm -rf /tmp/*
 
 USER root
