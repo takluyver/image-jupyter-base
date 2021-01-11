@@ -21,6 +21,11 @@ FROM jupyter/minimal-notebook:${IMG_VERISON}
 
 LABEL maintainer="FASTGenomics <contact@fastgenomics.org>"
 
+# overwrite conda default channels
+COPY --chown=1000:100 config /tmp/config
+RUN (echo; cat /tmp/config/.condarc) >> /opt/conda/.condarc && \
+        rm -rf /tmp/*
+
 # Install conda requirements
 COPY --chown=1000:100 requirements_conda.txt /tmp
 RUN conda config --add channels conda-forge && \
@@ -54,7 +59,6 @@ COPY --chown=1000:100 config /tmp/config
 RUN (echo; cat /tmp/config/jupyter_notebook_config.py) >> /etc/jupyter/jupyter_notebook_config.py && \
         mkdir -pv /opt/conda/share/jupyter/lab/settings && \
         cp /tmp/config/overrides.json /opt/conda/share/jupyter/lab/settings/overrides.json && \
-        (echo; cat /tmp/config/.condarc) >> /opt/conda/.condarc && \
         rm -rf /tmp/*
 
 USER root
