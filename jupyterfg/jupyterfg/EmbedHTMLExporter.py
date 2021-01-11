@@ -11,7 +11,36 @@ import os
 from ipython_genutils.ipstruct import Struct
 from nbconvert.exporters.html import HTMLExporter
 
-from urllib.request import urlopen  # py3
+import urllib.request
+
+
+user_agent = (
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:84.0) Gecko/20100101 Firefox/84.0"
+)
+HEADERS = {
+    "User-Agent": user_agent,
+}
+
+
+def request(url: str, headers: dict = HEADERS) -> str:
+    """Requests a url resource and retrieves it.
+
+    Parameters
+    ----------
+    url : str
+        Url to the resource
+    headers : dict, optional
+        Request headers, most important user agent, by default HEADERS
+
+    Returns
+    -------
+    str
+        byte encoded resource
+    """
+    request = urllib.request.Request(url, data=None, headers=headers)
+    data = urllib.request.urlopen(request).read()
+
+    return data
 
 
 class EmbedHTMLExporter(HTMLExporter):
@@ -39,7 +68,7 @@ class EmbedHTMLExporter(HTMLExporter):
         self.log.info("try embedding url: %s, format: %s" % (url, imgformat))
 
         if url.startswith("http"):
-            b64_data = base64.b64encode(urlopen(url).read()).decode("utf-8")
+            b64_data = base64.b64encode(request(url)).decode("utf-8")
         elif url.startswith("attachment"):
             imgname = url.split(":")[1]
             available_formats = self.attachments[imgname]
