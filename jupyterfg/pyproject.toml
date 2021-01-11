@@ -8,5 +8,9 @@ author = "FASTGenomics Team"
 author-email = "contact@fastgenomics.org"
 requires=[
     "nbconvert",
-    "jupyter_contrib_nbextensions",
+    "nbformat",
+    "lxml",
 ]
+
+[tool.flit.entrypoints."nbconvert.exporters"]
+html_embed = "jupyterfg.EmbedHTMLExporter:EmbedHTMLExporter"
