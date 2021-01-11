@@ -1,3 +1,4 @@
+import logging
 import os
 import time
 from pathlib import Path
@@ -5,6 +6,9 @@ from pathlib import Path
 import nbformat
 
 from .convert import to_html
+
+logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO, stream=sys.stdout)
 
 
 def mod_time(files: list, t_offset: int = -5):
@@ -43,4 +47,11 @@ def post_save_hook(model, os_path, contents_manager):
     html_file = os_path.with_suffix(".html")
     to_html(nb, html_file)
 
-    # mod_time([os_path, html_file])
+    try:
+        mod_time([os_path, html_file])
+    except PermissionError:
+        logger.warning("No permission to modify time stamp.")
+    except Exception as e:
+        logger.warning(
+            "An unknown error occured. Timestamp could not be modified.\n", e
+        )
