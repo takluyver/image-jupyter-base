@@ -1,0 +1,5 @@
+- Falsches Verzeichnis `/fastgenomics/' wird am Anfang gestartet.
+- Notebook wird nicht geöffnet
+- Properties sollten nach link
+- Quit button verschieben? -> in alten Analysen liegt da noch der alte Quit-Button drunter
+- Crash App -> notebookApp muss weg?!?
