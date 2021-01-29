@@ -1,17 +1,21 @@
 # set tag forjupyter/minimal-notebook
-ARG IMG_VERISON=703d8b2dcb88
+ARG IMG_VERISON=5cb007f03275
 
 ##############
 # BUILDSTAGE #
 ##############
 FROM jupyter/minimal-notebook:${IMG_VERISON} AS build_stage
 
-COPY --chown=1000:100 jupyterlab-expose /tmp/jupyterlab-expose
+COPY --chown=1000:100 build_requirements_conda.txt /tmp
+RUN conda config --add channels conda-forge && \
+        conda install -yq --file /tmp/build_requirements_conda.txt && \
+        conda clean -afy && \
+        rm -rf /tmp/*
 
+COPY --chown=1000:100 jupyterlab-expose /tmp/jupyterlab-expose
 RUN cd /tmp/jupyterlab-expose && \
-        npm install && \
-        npm run build && \
-        npm pack
+        python setup.py bdist_wheel
+
 
 
 ############
@@ -34,11 +38,8 @@ RUN conda config --add channels conda-forge && \
         rm -rf /tmp/*
 
 # install the jupyter expose extensions
-COPY --from=build_stage /tmp/jupyterlab-expose/jupyterlab-expose-1.0.0.tgz /opt/
-RUN jupyter labextension install /opt/jupyterlab-expose-1.0.0.tgz && \
-        jupyter lab clean && \
-        jlpm cache clean && \
-        npm cache clean --force
+COPY --from=build_stage /tmp/jupyterlab-expose/dist/jupyterlab_expose-2.0.0-py3-none-any.whl /opt/
+RUN pip install /opt/jupyterlab_expose-2.0.0-py3-none-any.whl
 
 
 # install jupyterfg (including the save hook)
