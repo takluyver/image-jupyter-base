@@ -33,7 +33,7 @@ would be visible (note, that all the other directories are still accessible, it'
 the UI that is limited to the `/fastgenomics` directory).
 
 The docker image has an altered jupyter config file (in
-`/etc/jupyter/jupyter_notebook_config.py`) which attaches a custom save hook that
+`/etc/jupyter/jupyter_server_config.py`) which attaches a custom save hook that
 exports the notebook to an html file on save.
 
 ## Batch execution
@@ -71,7 +71,7 @@ To simulate a crash of the jupyter application the endpoint `/6901a7302f214e3884
 
 ## Additional Files and folders
 
-- File `config/jupyter_notebook_config.py`  
+- File `config/jupyter_server_config.py`  
   Gets appended to the Jupyter Lab config and adds the custom save hook and the crash extension
 - File `config/overrides.json`  
   For configuration of the Jupyter Lab
