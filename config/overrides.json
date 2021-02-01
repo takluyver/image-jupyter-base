@@ -1,13 +1,18 @@
 {
-    "@jupyter-widgets/jupyterlab-manager:plugin": {
-        "saveState": true
-    },
-    "@jupyterlab/extensionmanager-extension:plugin": {
-        "enabled": true
-    },
-    "@jupyterlab/notebook-extension:tracker": {
-        "codeCellConfig": {
-            "lineNumbers": true
-        }
+  "@jupyter-widgets/jupyterlab-manager:plugin": {
+    "saveState": true
+  },
+  "@jupyterlab/extensionmanager-extension:plugin": {
+    "enabled": true
+  },
+  "@jupyterlab/notebook-extension:tracker": {
+    "codeCellConfig": {
+      "lineNumbers": true
     }
+  },
+  "@jupyterlab/application-extension:sidebar": {
+    "overrides": {
+      "jp-property-inspector": "left"
+    }
+  }
 }
