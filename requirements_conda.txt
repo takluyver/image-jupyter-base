@@ -1,3 +1,5 @@
+curl
 flit>=1.2
 jupytext >= 1.7
 lxml
+openssh
