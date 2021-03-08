@@ -48,7 +48,8 @@ def to_html(nb, html_file, exporter=None, code_folding=True):
         "metadata": {
             "path": html_file.parent
         },  # required to embed images correctly, otherwise wrong working directory
-        "ipywidgets_base_url": "https://unpkg.com/",  # required to embed widgets correctly
+        "jupyter_widgets_base_url": "https://unpkg.com/",  # required to embed widgets correctly
+        "html_manager_semver_range": "*", # required to embed widgets correctly
     }
 
     if exporter is None:
