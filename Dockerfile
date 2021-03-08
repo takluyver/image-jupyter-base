@@ -1,5 +1,5 @@
 # set tag forjupyter/minimal-notebook
-ARG IMG_VERISON=5cb007f03275
+ARG IMG_VERISON=d990a62010ae
 
 ##############
 # BUILDSTAGE #
