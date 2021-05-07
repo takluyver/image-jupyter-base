@@ -32,7 +32,7 @@ def execute_and_save(nb_file, cell_timeout=-1):
         ep.preprocess(nb, res)
     except CellExecutionError as err:
         logger.error(
-            "Execution of a cell failed. Stoping further execution of the Notebook."
+            "Execution of a cell failed. Stopping further execution of the Notebook."
         )
 
     logger.info(f"Converting notebook {nb_file} to html.")
