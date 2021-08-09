@@ -65,6 +65,8 @@ python -m jupyterfg --cell_timeout=10 analysis/analysis.ipynb
 
 ## Crash Extension
 
+> Not working anymore --> Modify after switch to JLAB3
+
 To simulate a crash of the jupyter application the endpoint `/6901a7302f214e38847a60f514798a42/crash` can be used, which will cause jupyter lab to exit with code `123`.
 
 > However, this is working on the FASTGenomics system, but there seems to be a problem with the standalone Docker image. Maybe related to some changes in the the base URL or default URL.
