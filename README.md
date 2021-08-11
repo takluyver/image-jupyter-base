@@ -10,11 +10,13 @@ There are two major new functionalities added, compared to the minimal-notebook:
 
 # Dependencies included
 
-The only additional packages on top of the base `jupyter/minimal-notebook` that this
-image includes are `flit` and `jupyter_contrib_nbextensions`:
+Only few additional packages on top of the base `jupyter/minimal-notebook` are included:
 
+- `curl` to allow downloading via `curl`
 - `flit` is used to install the associated `jupyterfg` python
   module that provides the functionality described below.
+- `jupytext` for markdown / Rmarkdown support
+- `openssh` to provide `ssh` from within the container
 
 # Usage
 
@@ -64,10 +66,7 @@ python -m jupyterfg --cell_timeout=10 analysis/analysis.ipynb
 
 ## Crash Extension
 
-> Not working anymore --> Modify after switch to JLAB3
-> To simulate a crash of the jupyter application the endpoint `/6901a7302f214e38847a60f514798a42/crash` can be used, which will cause jupyter lab to exit with code `123`.
-
-> However, this is working on the FASTGenomics system, but there seems to be a problem with the standalone Docker image. Maybe related to some changes in the the base URL or default URL.
+To simulate a crash of the jupyter application the endpoint `/6901a7302f214e38847a60f514798a42/crash` can be used, which will cause jupyter lab to exit with code `123`. This path has to be appended directly to the basepath without `api`.
 
 # Custom Changes
 
