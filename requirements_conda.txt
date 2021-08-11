@@ -3,3 +3,4 @@ flit>=1.2
 jupytext >= 1.7
 lxml
 openssh
+jedi=0.17.2 # TODO: To fix Tab autocompletion issue; Check if needed after JLab Update
