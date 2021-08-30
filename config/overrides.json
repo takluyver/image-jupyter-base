@@ -9,5 +9,10 @@
     "codeCellConfig": {
       "lineNumbers": true
     }
+  },
+  "@jupyterlab/application-extension:sidebar": {
+    "overrides": {
+      "jp-property-inspector": "left"
+    }
   }
 }

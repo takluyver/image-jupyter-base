@@ -20,7 +20,12 @@ def execute_and_save(nb_file, cell_timeout=-1):
     with open(nb_file) as f:
         nb = nbformat.read(f, as_version=4)
 
-    res = {"metadata": {"path": nb_file.parent}}
+    res = {
+        "metadata": {
+            "path": nb_file.parent,
+            "store_widget_state": True,
+        }
+    }
 
     logger.info(f"Stripping output from notebook {nb_file}.")
     clear = ClearOutputPreprocessor(log_level="DEBUG")

@@ -10,12 +10,13 @@ There are two major new functionalities added, compared to the minimal-notebook:
 
 # Dependencies included
 
-The only additional packages on top of the base `jupyter/minimal-notebook` that this
-image includes are `flit` and `jupyter_contrib_nbextensions`:
+Only few additional packages on top of the base `jupyter/minimal-notebook` are included:
 
+- `curl` to allow downloading via `curl`
 - `flit` is used to install the associated `jupyterfg` python
   module that provides the functionality described below.
-- `jupyter_contrib_nbextensions` is installed only for the `EmbedHTMLExporter`, which embeds imageas as base64 into the `html`.
+- `jupytext` for markdown / Rmarkdown support
+- `openssh` to provide `ssh` from within the container
 
 # Usage
 
@@ -33,7 +34,7 @@ would be visible (note, that all the other directories are still accessible, it'
 the UI that is limited to the `/fastgenomics` directory).
 
 The docker image has an altered jupyter config file (in
-`/etc/jupyter/jupyter_notebook_config.py`) which attaches a custom save hook that
+`/etc/jupyter/jupyter_server_config.py`) which attaches a custom save hook that
 exports the notebook to an html file on save.
 
 ## Batch execution
@@ -65,15 +66,35 @@ python -m jupyterfg --cell_timeout=10 analysis/analysis.ipynb
 
 ## Crash Extension
 
-> Not working anymore --> Modify after switch to JLAB3
+To simulate a crash of the jupyter application the endpoint `/6901a7302f214e38847a60f514798a42/crash` can be used, which will cause jupyter lab to exit with code `123`. This path has to be appended directly to the basepath without `api`.
 
-To simulate a crash of the jupyter application the endpoint `/6901a7302f214e38847a60f514798a42/crash` can be used, which will cause jupyter lab to exit with code `123`.
+# Custom Changes
 
-> However, this is working on the FASTGenomics system, but there seems to be a problem with the standalone Docker image. Maybe related to some changes in the the base URL or default URL.
+To handle some issues with jupyter lab some changes were made in our image.
+It should be checked whether these adaptions are still needed when updating the base image.
 
-## Additional Files and folders
+## Dockerfile
 
-- File `config/jupyter_notebook_config.py`  
+Sometimes the jupyter server was not shutting down properly.
+The reasons is unknown.
+However, the problem occured when using `conda env update -f evironment.yml`, where some unpinned dependencies where updated.
+Instead we now use `conda install` (and `pip install` in the other images).
+
+## jupyterfg
+
+- Widgets were not working in the html, because the righ `ipywidgets_base_url` is not set to `https://unpkg.com/` as a default.
+  The nbconvert CLI is doing this. We added it manually in `convert.py`.
+  There is also an [issue](https://github.com/jupyterlab/jupyterlab/issues/7262) on this.
+- There are multiple [issues](https://github.com/jupyterlab/jupyterlab/issues/7743) because Jupyter reports that the "file changed on disk" since the last save.
+  The reason are different server and client times.
+  There is a 500ms buffer build in, but this is not enough.
+  There are [plans](https://github.com/jupyterlab/jupyterlab/issues/8556) to make this configurable.
+  However, patching the [code](https://github.com/jupyterlab/jupyterlab/blob/34a94a4e65d5606dfb82d33b0f172d579bab5e0b/packages/docregistry/src/context.ts#L647) is not an option, as after clearing caches and rebuiling JLab (e.g., when installing extensions) the values are reset as the package is pulled from the sources again.
+  For this reasons, the post save hook is modified such, that the modification date for the `.ipynb` and `.html` file get predated by 5 seconds after save.
+
+# Additional Files and folders
+
+- File `config/jupyter_server_config.py`  
   Gets appended to the Jupyter Lab config and adds the custom save hook and the crash extension
 - File `config/overrides.json`  
   For configuration of the Jupyter Lab
